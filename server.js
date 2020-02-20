@@ -5,11 +5,19 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors')
 const Routes = require('../backend/Routes/routes');
+const session = require('express-session');
+
 
 
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'djhxcvxfgshjfgjhgsjhfgakjeauytsdfy', // a secret key you can write your own 
+    resave: false,
+    saveUninitialized: true
+  }));
+
 mongoose.connect('mongodb://127.0.0.1:27017/musicusers', { useNewUrlParser: true });
 const connection = mongoose.connection;
 connection.once('open', function () {
@@ -19,6 +27,7 @@ connection.once('open', function () {
 
 app.use('/users', Routes);
 const port = 9000;
+
 
 
 
