@@ -113,7 +113,7 @@ exports.userlogin = function (req, res) {
   User.findOne({ email: email, password: password }, function (err, user) {
 
     if (!user) {
-      res.send("User Not Found");
+      res.json({ respone: 'Not Found' })
 
 
     } else {
@@ -126,7 +126,7 @@ exports.userlogin = function (req, res) {
       console.log( req.session.secret);
       console.log("SECRET KEY --------------------------------------------------------");
 
-      res.send("User Found");
+      res.json({ respone: 'User Found' , _id:user._id})
     }
 
 
