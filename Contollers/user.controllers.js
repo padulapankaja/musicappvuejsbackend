@@ -21,6 +21,9 @@ exports.test = function (req, res) {
 
 exports.getallusers = function (req, res) {
 
+
+
+
   User.find(function (err, musicusers) {
     if (err) {
       console.log(err);
@@ -36,8 +39,9 @@ exports.getallusers = function (req, res) {
 
 
 exports.getuserfromid = function (req, res) {
+  console.log("Reques >>>>>>>>>>>" + req.query.id);
+  var id = req.query.id
 
-  let id = req.params.id
   User.findById(id, function (err, musicusers) {
     if (err) {
       console.log(err);
@@ -50,6 +54,8 @@ exports.getuserfromid = function (req, res) {
 
 
 
+
+
 exports.registerUser = function (req, res) {
   var fname = req.body.fname;
   var lname = req.body.lname;
@@ -59,7 +65,7 @@ exports.registerUser = function (req, res) {
   var password = req.body.password;
 
 
-  password = CryptoJS.AES.encrypt(password, 'secret key 123').toString();
+  // password = CryptoJS.AES.encrypt(password,'').toString();
 
 
 
@@ -108,8 +114,9 @@ exports.userlogin = function (req, res) {
   var email = req.body.username;
   var password = req.body.password;
 
-  console.log(password);
-  console.log(email);
+  // password = CryptoJS.AES.encrypt(password, '').toString();
+
+
   User.findOne({ email: email, password: password }, function (err, user) {
 
     if (!user) {
@@ -117,16 +124,9 @@ exports.userlogin = function (req, res) {
 
 
     } else {
-      req.session.user = user;
-      
-      console.log( req.session.user);
-      
-      console.log("SECRET KEY --------------------------------------------------------");
-      
-      console.log( req.session.secret);
-      console.log("SECRET KEY --------------------------------------------------------");
+      req.session.user = user
 
-      res.json({ respone: 'User Found' , _id:user._id})
+      res.json({ respone: 'User Found', _id: user._id })
     }
 
 
